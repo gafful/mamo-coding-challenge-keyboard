@@ -3,9 +3,10 @@ package com.gafful.mamo.keyboard
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class MainActivity : AppCompatActivity() {
+class KeyboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        supportActionBar?.hide()
+        setContentView(R.layout.activity_keyboard)
     }
 }

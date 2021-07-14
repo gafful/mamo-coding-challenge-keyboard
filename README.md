@@ -34,3 +34,5 @@ Tests
 - Has readme on how app works, what to expect et al
 - Remove custom matchers
 - Fix on pressed text should be white
+- Remove print statements
+- handle if decimal is entered first

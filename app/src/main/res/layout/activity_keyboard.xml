@@ -6,17 +6,52 @@
     android:layout_height="match_parent"
     tools:context=".KeyboardActivity">
 
-    <TextView
-        android:id="@+id/display"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/display_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/aed_0_00"
-        android:padding="12dp"
-        android:textSize="20sp"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/horizontal_guide_1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/display_currency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/aed"
+            android:paddingStart="12dp"
+            android:paddingEnd="6dp"
+            android:textSize="@dimen/keyboard_display_view" />
+
+        <TextView
+            android:id="@+id/display_whole_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/_0"
+            android:textSize="@dimen/keyboard_display_view" />
+
+        <TextView
+            android:id="@+id/display_decimal_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/_decimal"
+            android:textSize="@dimen/keyboard_display_view" />
+
+        <TextView
+            android:id="@+id/display_fractional_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/_00"
+            android:textSize="@dimen/keyboard_display_view"
+            app:layout_constraintBottom_toTopOf="@+id/horizontal_guide_1"
+            app:layout_constraintLeft_toRightOf="@+id/display_currency"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/horizontal_guide_1"

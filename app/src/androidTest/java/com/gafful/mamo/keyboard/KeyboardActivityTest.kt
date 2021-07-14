@@ -2,6 +2,7 @@ package com.gafful.mamo.keyboard
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -24,10 +25,18 @@ class KeyboardActivityTest {
 
     @Test
     fun keyboardActivityHasDisplayViewWithDefaultTextAndTextColour() {
-        Espresso.onView(withId(R.id.display))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-        Espresso.onView(withId(R.id.display))
-            .check(ViewAssertions.matches(withHint(R.string.aed_0_00)))
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withHint(R.string.aed)))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withHint(R.string._0)))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withHint(R.string._00)))
     }
 
     @Test
@@ -56,5 +65,14 @@ class KeyboardActivityTest {
             .check(ViewAssertions.matches(withText(R.string._decimal)))
         Espresso.onView(withId(R.id.button_delete))
             .check(ViewAssertions.matches(hasContentDescription()))
+    }
+
+    @Test
+    fun keyboardButtonsOutputExpectedValues() {
+        Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("1")))
     }
 }

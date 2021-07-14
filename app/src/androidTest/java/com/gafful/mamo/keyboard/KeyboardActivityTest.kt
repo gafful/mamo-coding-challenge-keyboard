@@ -68,11 +68,27 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonsOutputExpectedValues() {
+    fun keyboardButtonOneDisplaysExpectedValues() {
         Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
         Espresso.onView(withId(R.id.display_whole_value))
             .check(ViewAssertions.matches(withText("1")))
+    }
+
+    @Test
+    fun keyboardButtonTwoDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("2")))
+    }
+
+    @Test
+    fun keyboardButtonDecimalDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_decimal)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_decimal_value))
+            .check(ViewAssertions.matches(withText(".")))
     }
 }

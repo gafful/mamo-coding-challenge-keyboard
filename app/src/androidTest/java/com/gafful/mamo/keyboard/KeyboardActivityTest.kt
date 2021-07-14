@@ -86,6 +86,78 @@ class KeyboardActivityTest {
     }
 
     @Test
+    fun keyboardButtonThreeDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_3)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("3")))
+    }
+
+    @Test
+    fun keyboardButtonFourDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_4)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("4")))
+    }
+
+    @Test
+    fun keyboardButtonFiveDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_5)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("5")))
+    }
+
+    @Test
+    fun keyboardButtonSixDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_6)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("6")))
+    }
+
+    @Test
+    fun keyboardButtonSevenDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_7)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("7")))
+    }
+
+    @Test
+    fun keyboardButtonEightDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_8)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("8")))
+    }
+
+    @Test
+    fun keyboardButtonNineDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_9)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("9")))
+    }
+
+    @Test
+    fun keyboardButtonZeroDisplaysExpectedValues() {
+        Espresso.onView(withId(R.id.button_0)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText("AED")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("0")))
+    }
+
+    @Test
     fun keyboardButtonDecimalDisplaysExpectedValues() {
         Espresso.onView(withId(R.id.button_decimal)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_decimal_value))

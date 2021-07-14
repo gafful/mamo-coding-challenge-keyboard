@@ -26,11 +26,37 @@ class KeyboardActivity : AppCompatActivity() {
         binding.button2.setOnClickListener {
             updateValueDisplay((it as Button).text)
         }
+        binding.button3.setOnClickListener {
+            updateValueDisplay((it as Button).text)
+        }
+        binding.button4.setOnClickListener {
+            updateValueDisplay((it as Button).text)
+        }
+        binding.button5.setOnClickListener {
+            updateValueDisplay((it as Button).text)
+        }
+        binding.button6.setOnClickListener {
+            updateValueDisplay((it as Button).text)
+        }
+        binding.button7.setOnClickListener {
+            updateValueDisplay((it as Button).text)
+        }
+        binding.button8.setOnClickListener {
+            updateValueDisplay((it as Button).text)
+        }
+        binding.button9.setOnClickListener {
+            updateValueDisplay((it as Button).text)
+        }
+        binding.button0.setOnClickListener {
+            updateValueDisplay((it as Button).text)
+        }
         binding.buttonDecimal.setOnClickListener {
             binding.displayDecimalValue.text = (it as Button).text
             binding.displayDecimalValue.setTextColor(UiUtils.Colours.BLACK)
         }
-
+        binding.buttonDelete.setOnClickListener {
+            deleteValue()
+        }
     }
 
     /*
@@ -86,6 +112,14 @@ class KeyboardActivity : AppCompatActivity() {
                 binding.displayWholeValue.setTextColor(UiUtils.Colours.BLACK)
             }
         }
+    }
+
+    private fun deleteValue() {
+        //if decimals
+        //  delete from fractional
+        //else
+        // delete from whole
+
     }
 
 }

@@ -4,6 +4,7 @@ import android.graphics.Color
 
 object UiUtils {
     object Colours {
+        val GRAY = Color.parseColor("#FFAAAAAA")
         val BLACK = Color.parseColor("#FF000000")
     }
 

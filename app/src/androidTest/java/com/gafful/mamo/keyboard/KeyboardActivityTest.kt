@@ -158,9 +158,128 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonDecimalDisplaysExpectedValues() {
+    fun decimalButtonDisplaysExpectedValues() {
         Espresso.onView(withId(R.id.button_decimal)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_decimal_value))
             .check(ViewAssertions.matches(withText(".")))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withHint("00")))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withText("")))
+    }
+
+    @Test
+    fun deleteButtonHasNoEffectIfNoValueEntered() {
+        Espresso.onView(withId(R.id.button_delete)).perform(ViewActions.click())
+
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withHint(R.string.aed)))
+        Espresso.onView(withId(R.id.display_currency))
+
+            .check(ViewAssertions.matches(withText("")))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withHint(R.string._0)))
+        Espresso.onView(withId(R.id.display_whole_value))
+
+            .check(ViewAssertions.matches(withText("")))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withHint(R.string._00)))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withText("")))
+    }
+
+    @Test
+    fun enteringMoreThanTwoDecimalPlacesDoesNotUpdateFractionalValue() {
+        Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_decimal)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_3)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_4)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_5)).perform(ViewActions.click())
+
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("1")))
+
+        Espresso.onView(withId(R.id.display_decimal_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_decimal_value))
+            .check(ViewAssertions.matches(withText(".")))
+
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withText("23")))
+    }
+
+    @Test
+    fun deletingFractionalValuesClearsDisplayWithDefaultZeros() {
+        Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_decimal)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_3)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_delete)).perform(ViewActions.click())
+
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withHint(R.string.aed)))
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText(R.string.aed)))
+
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("1")))
+
+        Espresso.onView(withId(R.id.display_decimal_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_decimal_value))
+            .check(ViewAssertions.matches(withText(".")))
+
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withText("20")))
+    }
+
+    @Test
+    fun deletingWholeValuesClearsDisplayFromTheRight() {
+        Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_delete)).perform(ViewActions.click())
+
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withHint(R.string.aed)))
+        Espresso.onView(withId(R.id.display_currency))
+            .check(ViewAssertions.matches(withText(R.string.aed)))
+
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("1")))
+
+        Espresso.onView(withId(R.id.display_decimal_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_decimal_value))
+            .check(ViewAssertions.matches(withHint(".")))
+        Espresso.onView(withId(R.id.display_decimal_value))
+            .check(ViewAssertions.matches(withText("")))
+
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withHint("00")))
+        Espresso.onView(withId(R.id.display_fractional_value))
+            .check(ViewAssertions.matches(withText("")))
     }
 }

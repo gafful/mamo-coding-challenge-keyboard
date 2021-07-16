@@ -4,9 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.widget.Button
-import androidx.core.content.ContextCompat
 import androidx.core.text.color
-import androidx.core.text.isDigitsOnly
+import com.gafful.mamo.keyboard.UiUtils.formatDigits
 import com.gafful.mamo.keyboard.databinding.ActivityKeyboardBinding
 
 class KeyboardActivity : AppCompatActivity() {
@@ -78,7 +77,7 @@ class KeyboardActivity : AppCompatActivity() {
             binding.displayCurrency.setTextColor(UiUtils.Colours.BLACK)
 
             // Populate whole number display
-            binding.displayWholeValue.text = value
+            binding.displayWholeValue.text = value.formatDigits()
             binding.displayWholeValue.setTextColor(UiUtils.Colours.BLACK)
         } else {
             // Decimal point entered
@@ -105,7 +104,7 @@ class KeyboardActivity : AppCompatActivity() {
                 val updatedValue = "$currentWholeValue" + value
 
                 // Populate whole number display
-                binding.displayWholeValue.text = updatedValue
+                binding.displayWholeValue.text = updatedValue.replace(",", "").formatDigits()
                 binding.displayWholeValue.setTextColor(UiUtils.Colours.BLACK)
             }
         }
@@ -133,7 +132,11 @@ class KeyboardActivity : AppCompatActivity() {
             binding.displayDecimalValue.hint = getString(R.string._decimal)
         } else if (!binding.displayWholeValue.text.isNullOrEmpty()) { // If display has whole values
             val wholeValue = binding.displayWholeValue.text
-            val updatedWholeValue = wholeValue.removeSuffix(wholeValue.last().toString())
+            var updatedWholeValue = wholeValue.removeSuffix(wholeValue.last().toString())
+
+            if (updatedWholeValue.length > 3)
+                updatedWholeValue =
+                    updatedWholeValue.toString().replace(",", "").formatDigits().toString()
             binding.displayWholeValue.text = updatedWholeValue
 
             if (updatedWholeValue.isBlank())

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="keyboard_display_view">42sp</dimen>
+    <dimen name="keyboard_display_view">44sp</dimen>
+    <dimen name="keyboard_width">400dp</dimen>
 </resources>

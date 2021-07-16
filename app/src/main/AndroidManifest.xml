@@ -11,6 +11,8 @@
         android:theme="@style/Theme.MamoKeyboard">
         <activity
             android:name=".KeyboardActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

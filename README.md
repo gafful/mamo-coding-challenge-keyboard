@@ -1,20 +1,15 @@
 # mamo-coding-challenge-keyboard
 Implement keyboard according to video in Mamo coding challenge.
 
-# TODO
-Visual effect on click
-Entries expand on both sides equally
-Automatically add , when more than 3 digits
-offscreen reduces size and later scrolls horizontally - bonus
+# Description
+This app is a simple keyboard application which displays the digits when they are pressed.
+The fractional part stays grayed unless provided.
+On app start, a hint of the currency and digits are displayed.
+Finally, the digits are automatically formatted with commas in their thousands.
+
 Architecture - in case turned into a calculator - design pattern?
-75% of width up to a specified width on bigger screens
-
-
-Change back different button types
-
-Tests
 - Has readme on how app works, what to expect et al
-- Fix on pressed text should be white
-- Remove print statements
-- handle if decimal is entered first
-- Prevent 0000.90
+
+# Testing
+Run `$ adb shell am instrument -w -m    -e debug false -e class 'com.gafful.mamo.keyboard.KeyboardActivityTest' com.gafful.mamo.keyboard.test/androidx.test.runner.AndroidJUnitRunner`
+in your terminal to run the tests or run them from Android Studio

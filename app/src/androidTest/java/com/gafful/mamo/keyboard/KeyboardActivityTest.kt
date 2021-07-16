@@ -4,7 +4,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -281,5 +280,19 @@ class KeyboardActivityTest {
             .check(ViewAssertions.matches(withHint("00")))
         Espresso.onView(withId(R.id.display_fractional_value))
             .check(ViewAssertions.matches(withText("")))
+    }
+
+    @Test
+    fun digitsAreSeparatedByCommaInThousands() {
+        Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_3)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_4)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_5)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_6)).perform(ViewActions.click())
+        Espresso.onView(withId(R.id.button_7)).perform(ViewActions.click())
+
+        Espresso.onView(withId(R.id.display_whole_value))
+            .check(ViewAssertions.matches(withText("1,234,567")))
     }
 }

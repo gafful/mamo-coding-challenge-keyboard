@@ -2,9 +2,9 @@
 <resources>
 
     <style name="KeyboardButton" parent="Widget.AppCompat.Button.Borderless.Colored">
-        <item name="android:layout_width">64dp</item>
-        <item name="android:layout_height">64dp</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:layout_width">78dp</item>
+        <item name="android:layout_height">78dp</item>
+        <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/blue_2</item>
         <item name="android:background">@drawable/round_button_bg</item>
     </style>

@@ -103,6 +103,9 @@ class KeyboardActivity : AppCompatActivity() {
                 // Decimal point not entered
                 val updatedValue = "$currentWholeValue" + value
 
+                if (currentWholeValue.length == 19)
+                    return
+
                 // Populate whole number display
                 binding.displayWholeValue.text = updatedValue.replace(",", "").formatDigits()
                 binding.displayWholeValue.setTextColor(UiUtils.Colours.BLACK)

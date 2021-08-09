@@ -18,12 +18,12 @@ class KeyboardActivityTest {
     val activityRule = ActivityScenarioRule(KeyboardActivity::class.java)
 
     @Test
-    fun appLaunchesKeyboardActivitySuccessfully() {
+    fun appLaunches_keyboardActivity_successfully() {
         ActivityScenario.launch(KeyboardActivity::class.java)
     }
 
     @Test
-    fun keyboardActivityHasDisplayViewWithDefaultTextAndTextColour() {
+    fun keyboardActivity_hasDisplayView_withDefaultTextAndTextColour() {
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(isDisplayed()))
         Espresso.onView(withId(R.id.display_currency))
@@ -32,14 +32,18 @@ class KeyboardActivityTest {
             .check(ViewAssertions.matches(isDisplayed()))
         Espresso.onView(withId(R.id.display_whole_value))
             .check(ViewAssertions.matches(withHint(R.string._0)))
-        Espresso.onView(withId(R.id.display_fractional_value))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
             .check(ViewAssertions.matches(isDisplayed()))
-        Espresso.onView(withId(R.id.display_fractional_value))
-            .check(ViewAssertions.matches(withHint(R.string._00)))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withHint(R.string._0)))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(withHint(R.string._0)))
     }
 
     @Test
-    fun keyboardActivityHasAllExpectedButtonsWithLabels() {
+    fun keyboardActivity_hasAllExpectedButtons_withLabels() {
         Espresso.onView(withId(R.id.button_1))
             .check(ViewAssertions.matches(withText(R.string._1)))
         Espresso.onView(withId(R.id.button_2))
@@ -67,7 +71,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonOneDisplaysExpectedValues() {
+    fun keyboardButtonOne_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -76,7 +80,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonTwoDisplaysExpectedValues() {
+    fun keyboardButtonTwo_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -85,7 +89,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonThreeDisplaysExpectedValues() {
+    fun keyboardButtonThree_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_3)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -94,7 +98,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonFourDisplaysExpectedValues() {
+    fun keyboardButtonFour_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_4)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -103,7 +107,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonFiveDisplaysExpectedValues() {
+    fun keyboardButtonFive_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_5)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -112,7 +116,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonSixDisplaysExpectedValues() {
+    fun keyboardButtonSix_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_6)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -121,7 +125,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonSevenDisplaysExpectedValues() {
+    fun keyboardButtonSeven_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_7)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -130,7 +134,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonEightDisplaysExpectedValues() {
+    fun keyboardButtonEight_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_8)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -139,7 +143,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonNineDisplaysExpectedValues() {
+    fun keyboardButtonNine_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_9)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -148,7 +152,7 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun keyboardButtonZeroDisplaysExpectedValues() {
+    fun keyboardButtonZero_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_0)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_currency))
             .check(ViewAssertions.matches(withText("AED")))
@@ -157,18 +161,22 @@ class KeyboardActivityTest {
     }
 
     @Test
-    fun decimalButtonDisplaysExpectedValues() {
+    fun decimalButton_displaysExpectedValues() {
         Espresso.onView(withId(R.id.button_decimal)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.display_decimal_value))
             .check(ViewAssertions.matches(withText(".")))
-        Espresso.onView(withId(R.id.display_fractional_value))
-            .check(ViewAssertions.matches(withHint("00")))
-        Espresso.onView(withId(R.id.display_fractional_value))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withHint("0")))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withText("")))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(withHint("0")))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
             .check(ViewAssertions.matches(withText("")))
     }
 
     @Test
-    fun deleteButtonHasNoEffectIfNoValueEntered() {
+    fun deleteButton_hasNoEffect_ifNoValueIsEntered() {
         Espresso.onView(withId(R.id.button_delete)).perform(ViewActions.click())
 
         Espresso.onView(withId(R.id.display_currency))
@@ -183,18 +191,25 @@ class KeyboardActivityTest {
         Espresso.onView(withId(R.id.display_whole_value))
             .check(ViewAssertions.matches(withHint(R.string._0)))
         Espresso.onView(withId(R.id.display_whole_value))
-
             .check(ViewAssertions.matches(withText("")))
-        Espresso.onView(withId(R.id.display_fractional_value))
+
+        Espresso.onView(withId(R.id.display_fractional_value_1))
             .check(ViewAssertions.matches(isDisplayed()))
-        Espresso.onView(withId(R.id.display_fractional_value))
-            .check(ViewAssertions.matches(withHint(R.string._00)))
-        Espresso.onView(withId(R.id.display_fractional_value))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withHint(R.string._0)))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withText("")))
+
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(withHint(R.string._0)))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
             .check(ViewAssertions.matches(withText("")))
     }
 
     @Test
-    fun enteringMoreThanTwoDecimalPlacesDoesNotUpdateFractionalValue() {
+    fun enteringMoreThanTwoDecimalPlaces_doesNotUpdateFractionalValue() {
         Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.button_decimal)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
@@ -212,10 +227,15 @@ class KeyboardActivityTest {
         Espresso.onView(withId(R.id.display_decimal_value))
             .check(ViewAssertions.matches(withText(".")))
 
-        Espresso.onView(withId(R.id.display_fractional_value))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
             .check(ViewAssertions.matches(isDisplayed()))
-        Espresso.onView(withId(R.id.display_fractional_value))
-            .check(ViewAssertions.matches(withText("23")))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withText("2")))
+
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(withText("3")))
     }
 
     @Test
@@ -243,14 +263,19 @@ class KeyboardActivityTest {
         Espresso.onView(withId(R.id.display_decimal_value))
             .check(ViewAssertions.matches(withText(".")))
 
-        Espresso.onView(withId(R.id.display_fractional_value))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
             .check(ViewAssertions.matches(isDisplayed()))
-        Espresso.onView(withId(R.id.display_fractional_value))
-            .check(ViewAssertions.matches(withText("20")))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withText("2")))
+
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(withText("")))
     }
 
     @Test
-    fun deletingWholeValuesClearsDisplayFromTheRight() {
+    fun deletingWholeValues_clearsDisplayFromTheRight() {
         Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.button_delete)).perform(ViewActions.click())
@@ -274,16 +299,23 @@ class KeyboardActivityTest {
         Espresso.onView(withId(R.id.display_decimal_value))
             .check(ViewAssertions.matches(withText("")))
 
-        Espresso.onView(withId(R.id.display_fractional_value))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
             .check(ViewAssertions.matches(isDisplayed()))
-        Espresso.onView(withId(R.id.display_fractional_value))
-            .check(ViewAssertions.matches(withHint("00")))
-        Espresso.onView(withId(R.id.display_fractional_value))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withHint("0")))
+        Espresso.onView(withId(R.id.display_fractional_value_1))
+            .check(ViewAssertions.matches(withText("")))
+
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(isDisplayed()))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
+            .check(ViewAssertions.matches(withHint("0")))
+        Espresso.onView(withId(R.id.display_fractional_value_2))
             .check(ViewAssertions.matches(withText("")))
     }
 
     @Test
-    fun digitsAreSeparatedByCommaInThousands() {
+    fun digitsAreFormattedInThousands() {
         Espresso.onView(withId(R.id.button_1)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.button_2)).perform(ViewActions.click())
         Espresso.onView(withId(R.id.button_3)).perform(ViewActions.click())

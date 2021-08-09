@@ -39,7 +39,6 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/_0"
                 android:maxLength="19"
-                android:text=""
                 android:textSize="@dimen/keyboard_display_view" />
 
             <TextView
@@ -50,10 +49,17 @@
                 android:textSize="@dimen/keyboard_display_view" />
 
             <TextView
-                android:id="@+id/display_fractional_value"
+                android:id="@+id/display_fractional_value_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/_00"
+                android:hint="@string/_0"
+                android:textSize="@dimen/keyboard_display_view" />
+
+            <TextView
+                android:id="@+id/display_fractional_value_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/_0"
                 android:textSize="@dimen/keyboard_display_view" />
         </LinearLayout>
     </HorizontalScrollView>

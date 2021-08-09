@@ -1,16 +1,28 @@
 package com.gafful.mamo.keyboard
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.SpannableStringBuilder
 import android.widget.Button
-import androidx.core.text.color
-import com.gafful.mamo.keyboard.UiUtils.formatDigits
+import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.gafful.mamo.keyboard.commons.UiUtils
+import com.gafful.mamo.keyboard.data.KeyboardPreferencesRepository
+import com.gafful.mamo.keyboard.data.models.DisplayModel
 import com.gafful.mamo.keyboard.databinding.ActivityKeyboardBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class KeyboardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityKeyboardBinding
-    private var fractionalList = mutableListOf<Int>()
+    private lateinit var viewModel: KeyboardViewModel
+    private lateinit var currency: String
+    @Inject
+    lateinit var dataStore: DataStore<Preferences>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +30,25 @@ class KeyboardActivity : AppCompatActivity() {
         binding = ActivityKeyboardBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        initViewModel()
         initViews()
+    }
+
+    /**
+     * Initialize view model
+     */
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(
+            this,
+            KeyboardViewModel.KeyboardViewModelFactory()
+        ).get(KeyboardViewModel::class.java)
+
+        val keyboardPreferencesRepository = KeyboardPreferencesRepository(dataStore)
+        lifecycleScope.launch {
+            keyboardPreferencesRepository.getCurrency("AED").collect {
+                currency = it
+            }
+        }
     }
 
     /**
@@ -26,124 +56,101 @@ class KeyboardActivity : AppCompatActivity() {
      */
     private fun initViews() {
         binding.button1.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button2.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button3.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button4.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button5.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button6.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button7.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button8.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button9.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.button0.setOnClickListener {
-            updateValueDisplay((it as Button).text)
+            processInput((it as Button).text)
         }
         binding.buttonDecimal.setOnClickListener {
-            binding.displayDecimalValue.text = (it as Button).text
-            binding.displayDecimalValue.setTextColor(UiUtils.Colours.BLACK)
+            val displayModel = viewModel.processDecimalInput(
+                (it as Button).text,
+                currentDisplay(),
+                UiUtils.Colours.BLACK
+            )
+            processInput(displayModel)
         }
         binding.buttonDelete.setOnClickListener {
-            deleteValue()
+            val displayModel =
+                viewModel.processDeleteInput(this, currentDisplay(), UiUtils.Colours.GRAY)
+            processInput(displayModel)
         }
     }
 
     /**
      * Update both whole number and fractional displays
      */
-    private fun updateValueDisplay(value: CharSequence) {
-        val currentWholeValue = binding.displayWholeValue.text
-
-        // Whole number display is empty
-        if (currentWholeValue.isNullOrEmpty()) {
-            // Populate currency display
-            binding.displayCurrency.text = getString(R.string.aed)
-            binding.displayCurrency.setTextColor(UiUtils.Colours.BLACK)
-
-            // Populate whole number display
-            binding.displayWholeValue.text = value.formatDigits()
-            binding.displayWholeValue.setTextColor(UiUtils.Colours.BLACK)
-        } else {
-            // Decimal point entered
-            if (binding.displayDecimalValue.text.contentEquals(getString(R.string._decimal))) {
-
-                // Fractional value is empty
-                if (fractionalList.isNullOrEmpty()) {
-                    val text = SpannableStringBuilder()
-                        .color(UiUtils.Colours.BLACK) { append(value) }
-                        .color(UiUtils.Colours.GRAY) { append(getString(R.string._0)) }
-
-                    // Populate decimal with last value grayed out
-                    binding.displayFractionalValue.text = text
-                    fractionalList.add("$value".toInt())
-                } else if (fractionalList.size == 1) {// Fractional value has a single digit
-                    // Populate decimal display
-                    val updated = "${fractionalList.first()}" + value
-                    binding.displayFractionalValue.text = updated
-                    binding.displayFractionalValue.setTextColor(UiUtils.Colours.BLACK)
-                    fractionalList.add("$value".toInt())
-                }
-            } else {
-                // Decimal point not entered
-                val updatedValue = "$currentWholeValue" + value
-
-                if (currentWholeValue.length == 19)
-                    return
-
-                // Populate whole number display
-                binding.displayWholeValue.text = updatedValue.replace(",", "").formatDigits()
-                binding.displayWholeValue.setTextColor(UiUtils.Colours.BLACK)
-            }
-        }
+    private fun processInput(value: CharSequence) {
+        val displayModel = viewModel.processInput(
+            this,
+            value,
+            currentDisplay(),
+            UiUtils.Colours.BLACK
+        )
+        processInput(displayModel)
     }
 
     /**
-     * Clear display
+     * Get the current state of the display
      */
-    private fun deleteValue() {
-        // If display has fractional values
-        if (!fractionalList.isNullOrEmpty()) {
-            fractionalList.removeLast()
-            if (fractionalList.size == 1) {
-                val text = SpannableStringBuilder()
-                    .append(fractionalList.first().toString())
-                    .color(UiUtils.Colours.GRAY) { append(getString(R.string._0)) }
+    private fun currentDisplay() =
+        DisplayModel(
+            currency = currency,
+            currencyColour = binding.displayCurrency.currentTextColor,
+            wholeValue = binding.displayWholeValue.text,
+            wholeValueColour = binding.displayWholeValue.currentTextColor,
+            decimalValue = binding.displayDecimalValue.text,
+            decimalValueColour = binding.displayDecimalValue.currentTextColor,
+            fractionalValue1 = binding.displayFractionalValue1.text,
+            fractionalValue1Colour = binding.displayFractionalValue1.currentTextColor,
+            fractionalValue2 = binding.displayFractionalValue2.text,
+            fractionalValue2Colour = binding.displayFractionalValue2.currentTextColor,
+        )
 
-                // Populate fractional value with last value grayed out
-                binding.displayFractionalValue.text = text
-            } else {
-                binding.displayFractionalValue.text = ""
-            }
-        } else if (binding.displayDecimalValue.text.contentEquals(getString(R.string._decimal))) { // If display has decimal point
-            binding.displayDecimalValue.text = ""
-            binding.displayDecimalValue.hint = getString(R.string._decimal)
-        } else if (!binding.displayWholeValue.text.isNullOrEmpty()) { // If display has whole values
-            val wholeValue = binding.displayWholeValue.text
-            var updatedWholeValue = wholeValue.removeSuffix(wholeValue.last().toString())
+    /**
+     * Update all parts of the display
+     */
+    private fun processInput(displayModel: DisplayModel) {
+        // Update currency
+        binding.displayCurrency.text = displayModel.currency
+        binding.displayCurrency.setTextColor(displayModel.currencyColour)
 
-            if (updatedWholeValue.length > 3)
-                updatedWholeValue =
-                    updatedWholeValue.toString().replace(",", "").formatDigits().toString()
-            binding.displayWholeValue.text = updatedWholeValue
+        // Update whole number
+        binding.displayWholeValue.text = displayModel.wholeValue
+        binding.displayWholeValue.setTextColor(displayModel.wholeValueColour)
 
-            if (updatedWholeValue.isBlank())
-                binding.displayCurrency.text = ""
-        }
+        // Update decimal point
+        binding.displayDecimalValue.text = displayModel.decimalValue
+        binding.displayDecimalValue.setTextColor(displayModel.decimalValueColour)
+
+        // Update fractional values
+        binding.displayFractionalValue1.text = displayModel.fractionalValue1
+        binding.displayFractionalValue1.setTextColor(displayModel.fractionalValue1Colour)
+
+        binding.displayFractionalValue2.text = displayModel.fractionalValue2
+        binding.displayFractionalValue2.setTextColor(displayModel.fractionalValue2Colour)
     }
 }
